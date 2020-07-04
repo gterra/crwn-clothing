@@ -1,17 +1,66 @@
 import React from "react";
 import { Route } from "react-router-dom";
+import { connect } from "react-redux";
+
+import {
+  firestore,
+  convertCollectionsSnapshotToMap,
+} from "../../firebase/firebase.utils";
+
+import { updateCollections } from "../../redux/shop/shop.actions";
 
 import CollectionsOverview from "./../../components/collections-overview/collections-overview.component";
 import CollectionPage from "./../collection/collection.component";
+import WithSpinner from "./../../components/with-spinner/with-spinner.component";
 
-const ShopPage = ({ match }) => (
-  <div>
-    <Route exact path={`${match.path}`} component={CollectionsOverview}></Route>
-    <Route
-      path={`${match.path}/:collectionId`}
-      component={CollectionPage}
-    ></Route>
-  </div>
-);
+const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
+const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
-export default ShopPage;
+class ShopPage extends React.Component {
+  state = {
+    loading: true,
+  };
+
+  unsubscribeFromSnapshot = null;
+
+  componentDidMount() {
+    const { updateCollections } = this.props;
+
+    const collectionRef = firestore.collection("collections");
+
+    collectionRef.onSnapshot(async (snapshot) => {
+      const map = convertCollectionsSnapshotToMap(snapshot);
+      updateCollections(map);
+      this.setState({ loading: false });
+    });
+  }
+
+  render() {
+    const { match } = this.props;
+    const { loading } = this.state;
+    return (
+      <div>
+        <Route
+          exact
+          path={`${match.path}`}
+          render={(props) => (
+            <CollectionsOverviewWithSpinner isLoading={loading} {...props} />
+          )}
+        ></Route>
+        <Route
+          path={`${match.path}/:collectionId`}
+          render={(props) => (
+            <CollectionPageWithSpinner isLoading={loading} {...props} />
+          )}
+        ></Route>
+      </div>
+    );
+  }
+}
+
+const mapDispatchToProps = (dispach) => ({
+  updateCollections: (collectionsMap) =>
+    dispach(updateCollections(collectionsMap)),
+});
+
+export default connect(null, mapDispatchToProps)(ShopPage);
