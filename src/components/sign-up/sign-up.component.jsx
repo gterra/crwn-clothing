@@ -1,14 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
 import FormInput from "./../form-input/form-input.component";
 import CustomButton from "./../custom-button/custom-button.component";
 
-import { SignUpDiv, TitleH2 } from "./sign-up.styles";
+import { SignUpDiv, TitleH2, ErrorMessage } from "./sign-up.styles";
 
-import {
-  auth,
-  createUserProfileDocument,
-} from "./../../firebase/firebase.utils";
+import { emailSignUpStart } from "../../redux/user/user.actions";
+import { selectError } from "./../../redux/user/user.selectors";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -26,27 +26,14 @@ class SignUp extends React.Component {
     e.preventDefault();
 
     const { displayName, email, password, confirmPassword } = this.state;
+    const { emailSignUpStart } = this.props;
 
     if (password !== confirmPassword) {
       alert("Passwords don't match.");
       return;
     }
 
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      createUserProfileDocument(user, { displayName });
-      this.setState({
-        displayName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    emailSignUpStart(displayName, email, password);
   };
 
   handleChange = (e) => {
@@ -55,6 +42,7 @@ class SignUp extends React.Component {
   };
 
   render() {
+    const { error } = this.props;
     return (
       <SignUpDiv>
         <TitleH2>I do not have an account</TitleH2>
@@ -96,9 +84,19 @@ class SignUp extends React.Component {
 
           <CustomButton type="submit">Sign up</CustomButton>
         </form>
+        {error ? <ErrorMessage>{error.message}</ErrorMessage> : null}
       </SignUpDiv>
     );
   }
 }
 
-export default SignUp;
+const mapStateToProps = createStructuredSelector({
+  error: selectError,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  emailSignUpStart: (displayName, email, password) =>
+    dispatch(emailSignUpStart({ displayName, email, password })),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

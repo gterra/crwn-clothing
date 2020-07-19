@@ -9,3 +9,9 @@ export const SignUpDiv = styled.div`
 export const TitleH2 = styled.h2`
   margin: 10px 0;
 `;
+
+export const ErrorMessage = styled.h2`
+  margin: 10px 0;
+  text-align: center;
+  color: red;
+`;
