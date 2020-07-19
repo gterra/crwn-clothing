@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
@@ -10,23 +10,18 @@ import { SignUpDiv, TitleH2, ErrorMessage } from "./sign-up.styles";
 import { emailSignUpStart } from "../../redux/user/user.actions";
 import { selectError } from "./../../redux/user/user.selectors";
 
-class SignUp extends React.Component {
-  constructor(props) {
-    super(props);
+const SignUp = ({ emailSignUpStart, error }) => {
+  const [userCredentials, setUserCredentials] = useState({
+    displayName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-    this.state = {
-      displayName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    };
-  }
+  const { displayName, email, password, confirmPassword } = userCredentials;
 
-  handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const { displayName, email, password, confirmPassword } = this.state;
-    const { emailSignUpStart } = this.props;
 
     if (password !== confirmPassword) {
       alert("Passwords don't match.");
@@ -36,59 +31,56 @@ class SignUp extends React.Component {
     emailSignUpStart(displayName, email, password);
   };
 
-  handleChange = (e) => {
+  const handleChange = (e) => {
     const { value, name } = e.target;
-    this.setState({ [name]: value });
+    setUserCredentials({ ...userCredentials, [name]: value });
   };
 
-  render() {
-    const { error } = this.props;
-    return (
-      <SignUpDiv>
-        <TitleH2>I do not have an account</TitleH2>
-        <span>Sign up with your email and password</span>
+  return (
+    <SignUpDiv>
+      <TitleH2>I do not have an account</TitleH2>
+      <span>Sign up with your email and password</span>
 
-        <form onSubmit={this.handleSubmit}>
-          <FormInput
-            name="displayName"
-            type="text"
-            value={this.state.displayName}
-            required
-            label="Name"
-            handleChange={this.handleChange}
-          />
-          <FormInput
-            name="email"
-            type="email"
-            value={this.state.email}
-            required
-            label="Email"
-            handleChange={this.handleChange}
-          />
-          <FormInput
-            name="password"
-            type="password"
-            value={this.state.password}
-            required
-            label="Password"
-            handleChange={this.handleChange}
-          />
-          <FormInput
-            name="confirmPassword"
-            type="password"
-            value={this.state.confirmPassword}
-            required
-            label="Confirm password"
-            handleChange={this.handleChange}
-          />
+      <form onSubmit={handleSubmit}>
+        <FormInput
+          name="displayName"
+          type="text"
+          value={displayName}
+          required
+          label="Name"
+          handleChange={handleChange}
+        />
+        <FormInput
+          name="email"
+          type="email"
+          value={email}
+          required
+          label="Email"
+          handleChange={handleChange}
+        />
+        <FormInput
+          name="password"
+          type="password"
+          value={password}
+          required
+          label="Password"
+          handleChange={handleChange}
+        />
+        <FormInput
+          name="confirmPassword"
+          type="password"
+          value={confirmPassword}
+          required
+          label="Confirm password"
+          handleChange={handleChange}
+        />
 
-          <CustomButton type="submit">Sign up</CustomButton>
-        </form>
-        {error ? <ErrorMessage>{error.message}</ErrorMessage> : null}
-      </SignUpDiv>
-    );
-  }
-}
+        <CustomButton type="submit">Sign up</CustomButton>
+      </form>
+      {error ? <ErrorMessage>{error.message}</ErrorMessage> : null}
+    </SignUpDiv>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   error: selectError,
