@@ -12,13 +12,18 @@ import { signOutStart } from "../../redux/user/user.actions";
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 
-import { HeaderDiv, OptionsDiv, OptionLink } from "./header.styles";
+import {
+  HeaderDiv,
+  OptionsDiv,
+  LogoContainer,
+  OptionLink,
+} from "./header.styles";
 
 const Header = ({ currentUser, hidden, signOutStart }) => (
   <HeaderDiv>
-    <OptionLink to="">
+    <LogoContainer to="">
       <Logo className="logo" />
-    </OptionLink>
+    </LogoContainer>
     <OptionsDiv>
       <OptionLink to="/shop">SHOP</OptionLink>
       <OptionLink to="/contact">CONTACT</OptionLink>

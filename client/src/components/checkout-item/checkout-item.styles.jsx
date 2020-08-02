@@ -8,6 +8,10 @@ export const CheckoutItemDiv = styled.div`
   padding: 15px 0;
   font-size: 20px;
   align-items: center;
+
+  @media screen and (max-width: 800px) {
+    font-size: 18px;
+  }
 `;
 
 export const ImageDiv = styled.div`
@@ -22,6 +26,10 @@ export const ImageDiv = styled.div`
 
 export const TextSpan = styled.span`
   width: 23%;
+
+  @media screen and (max-width: 800px) {
+    width: 22%;
+  }
 `;
 
 export const QuantitySpan = styled(TextSpan)`
