@@ -17,13 +17,17 @@ import {
 } from "./user.actions";
 
 export function* getSnapshotFromUserAuth(userAuth, additionalData) {
-  const userRef = yield call(
-    createUserProfileDocument,
-    userAuth,
-    additionalData
-  );
-  const userSnapshot = yield userRef.get();
-  yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
+  try {
+    const userRef = yield call(
+      createUserProfileDocument,
+      userAuth,
+      additionalData
+    );
+    const userSnapshot = yield userRef.get();
+    yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
+  } catch (error) {
+    yield put(signInFailure(error));
+  }
 }
 
 export function* signInWithGoogle() {
@@ -59,7 +63,7 @@ export function* signInAfterSignUp({ payload: { user, additionalData } }) {
   yield getSnapshotFromUserAuth(user, additionalData);
 }
 
-export function* checkUserSession() {
+export function* getUserSession() {
   try {
     const userAuth = yield getCurrentUser();
     if (!userAuth) return;
@@ -99,7 +103,7 @@ export function* onSignOutStart() {
 }
 
 export function* onCheckUserSession() {
-  yield takeLatest(UserActionTypes.CHECK_USER_SESSION, checkUserSession);
+  yield takeLatest(UserActionTypes.CHECK_USER_SESSION, getUserSession);
 }
 
 export function* userSagas() {
