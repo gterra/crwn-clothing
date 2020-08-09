@@ -43,8 +43,10 @@ export const QuantitySpan = styled(TextSpan)`
     cursor: pointer;
   }
 `;
+QuantitySpan.displayName = "QuantitySpan";
 
 export const RemoveButton = styled.div`
   padding-left: 12px;
   cursor: pointer;
 `;
+RemoveButton.displayName = "RemoveButton";

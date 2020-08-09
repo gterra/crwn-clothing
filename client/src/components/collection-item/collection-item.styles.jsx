@@ -9,6 +9,7 @@ export const ImageDiv = styled.div`
   margin-bottom: 5px;
   background-image: ${({ imageUrl }) => `url(${imageUrl})`};
 `;
+ImageDiv.displayName = "ImageDiv";
 
 export const AddButton = styled(CustomButton)`
   width: 80%;
@@ -24,6 +25,7 @@ export const AddButton = styled(CustomButton)`
     padding: 0 10px;
   }
 `;
+AddButton.displayName = "AddButton";
 
 export const CollectionItemDiv = styled.div`
   width: 22vw;
@@ -70,7 +72,9 @@ export const NameSpan = styled.span`
   width: 90%;
   margin-bottom: 15px;
 `;
+NameSpan.displayName = "NameSpan";
 
 export const PriceSpan = styled.span`
   width: 10%;
 `;
+PriceSpan.displayName = "PriceSpan";

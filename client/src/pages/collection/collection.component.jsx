@@ -6,7 +6,7 @@ import CollectionItem from "./../../components/collection-item/collection-item.c
 
 import { CollectionPageDiv, TitleH2, ItemsDiv } from "./collection.styles";
 
-const CollectionPage = ({ collection }) => (
+export const CollectionPage = ({ collection }) => (
   <CollectionPageDiv>
     <TitleH2>{collection.title}</TitleH2>
     <ItemsDiv>

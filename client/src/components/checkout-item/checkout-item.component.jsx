@@ -15,7 +15,7 @@ import {
   RemoveButton,
 } from "./checkout-item.styles";
 
-const CheckoutItem = ({
+export const CheckoutItem = ({
   item,
   clearItemFromCart,
   addCartItem,

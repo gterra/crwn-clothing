@@ -7,6 +7,7 @@ export const BackgroundImageDiv = styled.div`
   background-size: cover;
   background-image: ${({ imageUrl }) => `url(${imageUrl})`};
 `;
+BackgroundImageDiv.displayName = "BackgroundImageDiv";
 
 export const ContentDiv = styled.div`
   height: 90px;
@@ -20,6 +21,7 @@ export const ContentDiv = styled.div`
   opacity: 0.7;
   position: absolute;
 `;
+ContentDiv.displayName = "ContentDiv";
 
 export const MenuItemDiv = styled.div`
   min-width: 30%;
@@ -57,6 +59,7 @@ export const MenuItemDiv = styled.div`
     height: 200px;
   }
 `;
+MenuItemDiv.displayName = "MenuItemDiv";
 
 export const TitleH1 = styled.h1`
   font-weight: bold;
@@ -64,8 +67,10 @@ export const TitleH1 = styled.h1`
   font-size: 22px;
   color: #4a4a4a;
 `;
+TitleH1.displayName = "TitleH1";
 
 export const SubTitleSpan = styled.span`
   font-weight: lighter;
   font-size: 16px;
 `;
+SubTitleSpan.displayName = "SubTitleSpan";

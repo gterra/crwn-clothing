@@ -13,7 +13,12 @@ export const CollectionPreviewDiv = styled.div`
 export const TitleH1 = styled.h1`
   font-size: 28px;
   margin-bottom: 25px;
+  cursor: pointer;
+  &:hover {
+    color: grey;
+  }
 `;
+TitleH1.displayName = "TitleH1";
 
 export const PreviewDiv = styled.div`
   display: flex;

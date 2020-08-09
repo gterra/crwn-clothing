@@ -9,7 +9,7 @@ import {
   SubTitleSpan,
 } from "./menu-item.styles";
 
-const MenuItem = ({ item, history, match }) => (
+export const MenuItem = ({ item, history, match }) => (
   <MenuItemDiv
     size={item.size}
     onClick={() => history.push(`${match.url}${item.linkUrl}`)}

@@ -2,7 +2,7 @@ import React from "react";
 
 import { SpinnerOverlay, SpinnerContainer } from "./spinner.styles";
 
-const Spinner = () => (
+export const Spinner = () => (
   <SpinnerOverlay>
     <SpinnerContainer />
   </SpinnerOverlay>

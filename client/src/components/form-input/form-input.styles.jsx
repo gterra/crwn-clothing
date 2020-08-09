@@ -20,6 +20,7 @@ export const GroupDiv = styled.div`
     letter-spacing: 0.3em;
   }
 `;
+GroupDiv.displayName = "GroupDiv";
 
 export const Input = styled.input`
   background: none;
@@ -40,6 +41,7 @@ export const Input = styled.input`
     ${shrinkLabelStyles}
   }
 `;
+Input.displayName = "Input";
 
 export const FormInputLabel = styled.label`
   color: ${subColor};
@@ -52,3 +54,4 @@ export const FormInputLabel = styled.label`
   transition: 300ms ease all;
   ${getShrinkLabelStyles}
 `;
+FormInputLabel.displayName = "FormInputLabel";

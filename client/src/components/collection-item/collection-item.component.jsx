@@ -11,7 +11,7 @@ import {
   PriceSpan,
 } from "./collection-item.styles";
 
-const CollectionItem = ({ item, addCartItem }) => {
+export const CollectionItem = ({ item, addCartItem }) => {
   const { imageUrl, name, price } = item;
   return (
     <CollectionItemDiv>
